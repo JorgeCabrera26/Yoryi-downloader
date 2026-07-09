@@ -2,4 +2,3 @@ Flask
 yt-dlp
 gunicorn
 pyexecjs
-yt-dlp --list-formats https://www.youtube.com/watch?v=1JGfxBkEgdE

@@ -27,15 +27,14 @@ def analizar():
     
     ydl_opts = {
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
-        'cookiefile': 'cookies.txt',  # <-- ¡ASEGÚRATE DE QUE ESTA LÍNEA ESTÉ AQUÍ!
-        'format': 'b/best',
+        'format': 'best', # <-- Forzar 'best' simple
         'noplaylist': True,
         'quiet': False,
         'no_warnings': False,
         'extractor_args': {
             'youtube': {
-                'player_client': ['android', 'web'],
-                'skip': ['dash', 'hls'],
+                'player_client': ['ios', 'android'], # <-- Usar clientes móviles que no piden cookies estrictas
+                'skip': ['dash', 'hls']
             }
         }
     }

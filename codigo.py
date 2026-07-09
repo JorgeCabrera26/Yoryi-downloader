@@ -27,13 +27,13 @@ def analizar():
     
     ydl_opts = {
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
-        'format': 'best', # <-- Forzar 'best' simple
+        'format': 'best',
         'noplaylist': True,
         'quiet': False,
         'no_warnings': False,
         'extractor_args': {
             'youtube': {
-                'player_client': ['ios', 'android'], # <-- Usar clientes móviles que no piden cookies estrictas
+                'player_client': ['web_embedded', 'tvclient'], # <-- Estos clientes evaden la verificación de bot sin pedir cookies
                 'skip': ['dash', 'hls']
             }
         }

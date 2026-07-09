@@ -71,14 +71,14 @@ def descargar():
     url = request.form.get('url')
     format_id = request.form.get('format_id')
     
-    ydl_opts = {
+   ydl_opts = {
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
-        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', # <--- ¡AQUÍ FALTABA LA COMA!
         'cookiefile': 'cookies.txt',
         'format': 'best',
         'noplaylist': True,
         # Esto ayuda a evitar el error de JavaScrip que vimos anteriormente
-        'external_downloader_args': ['--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36']
+        'external_downloader_args': ['--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'], # <--- Una coma aquí también es buena práctica
     }
     
     if format_id == 'bestaudio':

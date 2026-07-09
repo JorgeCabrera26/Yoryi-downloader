@@ -27,13 +27,14 @@ def analizar():
     
     ydl_opts = {
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
-        'format': 'b/best', # <-- Obliga a buscar el formato directo básico sin exigir división de pistas
+        'cookiefile': 'cookies.txt',  # <-- ¡ASEGÚRATE DE QUE ESTA LÍNEA ESTÉ AQUÍ!
+        'format': 'b/best',
         'noplaylist': True,
         'quiet': False,
         'no_warnings': False,
         'extractor_args': {
             'youtube': {
-                'player_client': ['android', 'web'], # <-- Engaña a YouTube simulando una app de celular
+                'player_client': ['android', 'web'],
                 'skip': ['dash', 'hls'],
             }
         }

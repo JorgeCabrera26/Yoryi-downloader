@@ -26,7 +26,7 @@ def analizar():
     
     ydl_opts = {
         'skip_download': True,
-        'youtube_include_dash_manifest': True
+        'youtube_include_dash_manifest': True,
         # ... otras configuraciones ...
         'cookiefile': 'cookies.txt'
     }

@@ -2,6 +2,14 @@ from flask import Flask, render_template, request, send_file
 import yt_dlp
 import os
 
+#Esto carga las cookies desde la variable de entorno que configuraste en render
+cookies_content = os.getenv('COOKIES_CONTENT')
+
+if cookies_content:
+    with open('cookies.txt', 'w') as f:
+        f.write(cookies_content)
+  
+
 app = Flask(__name__)
 
 CARPETA_DESCARGAS = os.path.join(os.getcwd(), 'descargas_temp')
@@ -19,6 +27,8 @@ def analizar():
     ydl_opts = {
         'skip_download': True,
         'youtube_include_dash_manifest': True
+        # ... otras configuraciones ...
+        'cookiefile': 'cookies.txt'
     }
     
     try:

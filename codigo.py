@@ -26,10 +26,17 @@ def analizar():
     url = request.form.get('url')
     
     ydl_opts = {
-        'skip_download': True,
-        'youtube_include_dash_manifest': True,
-        # ... otras configuraciones ...
-        'cookiefile': 'cookies.txt'
+        'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
+        'format': 'b/best', # <-- Obliga a buscar el formato directo básico sin exigir división de pistas
+        'noplaylist': True,
+        'quiet': False,
+        'no_warnings': False,
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['android', 'web'], # <-- Engaña a YouTube simulando una app de celular
+                'skip': ['dash', 'hls'],
+            }
+        }
     }
     
     try:

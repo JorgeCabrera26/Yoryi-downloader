@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoryi Downloader Pro</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1b26;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .contenedor {
+            background-color: #24283b;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            text-align: center;
+            width: 100%;
+            max-width: 480px;
+        }
+        h1 { color: #00ffcc; margin-top: 0; margin-bottom: 10px; font-size: 26px; }
+        p { color: #a9b1d6; margin-bottom: 25px; font-size: 14px; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 8px; color: #7aa2f7; font-weight: bold; font-size: 14px; }
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #414868;
+            background-color: #1a1b26;
+            color: white;
+            box-sizing: border-box;
+            font-size: 15px;
+            transition: border 0.3s;
+        }
+        input[type="text"]:focus, select:focus {
+            border-color: #00ffcc;
+            outline: none;
+        }
+        button {
+            background-color: #2ed573;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(46, 213, 115, 0.2);
+        }
+        button:hover { background-color: #26af5f; transform: translateY(-1px); }
+        button:disabled { background-color: #414868; color: #a9b1d6; cursor: not-allowed; box-shadow: none; }
+        .loader-container { display: none; margin-top: 20px; flex-direction: column; align-items: center; }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #00ffcc;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .video-info { background: #1a1b26; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #414868; }
+        .thumbnail { width: 100%; border-radius: 6px; margin-bottom: 10px; }
+        .video-title { font-size: 14px; font-weight: bold; color: #ff9e64; text-align: left; margin: 0; }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <h1>Yoryi Downloader Pro</h1>
+    <p>Tu plataforma personal de descargas en alta calidad</p>
+    
+    {% if not info %}
+    <form action="/analizar" method="POST" id="form-analizar">
+        <div class="input-group">
+            <label>Enlace del Video</label>
+            <input type="text" name="url" placeholder="Pegá el link de YouTube acá..." required>
+        </div>
+        <button type="submit" id="btn-analizar">BUSCAR OPCIONES</button>
+    </form>
+    {% endif %}
+
+    {% if info %}
+    <div class="video-info">
+        {% if info.thumbnail %}
+        <img class="thumbnail" src="{{ info.thumbnail }}" alt="Miniatura">
+        {% endif %}
+        <p class="video-title">{{ info.title }}</p>
+    </div>
+
+    <form action="/descargar" method="POST" id="form-descargar">
+        <input type="hidden" name="url" value="{{ info.url }}">
+        
+        <div class="input-group">
+            <label>Selecciona la Calidad Disponible</label>
+            <select name="format_id">
+                {% for f in info.formats %}
+                <option value="{{ f.id }}">{{ f.ext.upper() }} - {{ f.res }} {% if f.filesize %}(~{{ f.filesize }} MB){% endif %}</option>
+                {% endfor %}
+                <option value="bestaudio">Solo Audio (MP3 / Mejor Calidad)</option>
+            </select>
+        </div>
+        <button type="submit" id="btn-descargar" style="background-color: #00ffcc; color: #1a1b26;">¡INICIAR DESCARGA REAL!</button>
+    </form>
+    <div style="margin-top: 15px;">
+        <a href="/" style="color: #a9b1d6; font-size: 13px; text-decoration: none;">← Buscar otro video</a>
+    </div>
+    {% endif %}
+
+    <div class="loader-container" id="loader">
+        <div class="spinner"></div>
+        <div id="loader-text" style="font-size: 14px; color: #00ffcc;">Analizando el video...</div>
+    </div>
+</div>
+
+<script>
+    const formAnalizar = document.getElementById('form-analizar');
+    if(formAnalizar) {
+        formAnalizar.addEventListener('submit', function() {
+            document.getElementById('btn-analizar').disabled = true;
+            document.getElementById('loader').style.display = 'flex';
+            document.getElementById('loader-text').innerText = 'Leyendo calidades disponibles...';
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
 Flask
 git+https://github.com/yt-dlp/yt-dlp.git
 gunicorn
-yt-dlp --upgrade
+yt-dlp>=2025.6.30

@@ -36,6 +36,11 @@ def analizar():
         'cookiefile': cookies_path,
         'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'format': 'best',
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['ios', 'android']  # <-- Forzamos clientes móviles que no usan el desafío web pesado
+            }
+        }
     }
     
     try:
@@ -79,10 +84,15 @@ def descargar():
     
     ydl_opts = {
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
-        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'cookiefile': cookies_path,
+        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'format': 'best',
         'noplaylist': True,
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['ios', 'android']  # <-- Lo mismo acá
+            }
+        }
     }
     
     if format_id == 'bestaudio':

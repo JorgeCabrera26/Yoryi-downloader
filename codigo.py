@@ -13,6 +13,12 @@ if cookies_content:
     cookies_content = cookies_content.replace('\\n', '\n')
     with open(cookies_path, 'w', encoding='utf-8') as f:
         f.write(cookies_content)
+    print("cookies encontradas:",
+os.parh.exists(cookies_path)))
+    print("Tamaño:",
+os.path.getsize(cookies_path))
+else:
+    print("No existe COOKIES_CONTENT en render")
 
 app = Flask(__name__)
 

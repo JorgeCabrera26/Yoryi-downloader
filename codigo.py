@@ -84,7 +84,6 @@ def descargar():
         'format': 'best',
         'noplaylist': True,
     }
-    }
     
     if format_id == 'bestaudio':
         ydl_opts['format'] = 'bestaudio/best'

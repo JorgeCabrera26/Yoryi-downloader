@@ -3,6 +3,10 @@ import yt_dlp
 import execjs 
 import os
 
+# Obtiene la ruta de la carpeta actual donde corre tu script
+base_dir = os.path.dirname(os.pacth.abspath(__file__))
+cookies_path = os.path.join(base_dir, 'cookies.txt')
+
 #Esto carga las cookies desde la variable de entorno que configuraste en render
 cookies_content = os.getenv('COOKIES_CONTENT')
 
@@ -83,6 +87,8 @@ def descargar():
         'format': 'bestvideo+bestaudio/best', # <--- CAMBIA ESTA LÍNEA (Intenta el mejor video y audio combinados, o el mejor que venga solo)
         'noplaylist': True,
         'external_downloader_args': ['--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'],
+        'format': 'best',
+        'cookiefile': cookies_path, # Ruta exacta y absoluta
     }
     
     if format_id == 'bestaudio':

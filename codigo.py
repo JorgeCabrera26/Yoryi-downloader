@@ -38,7 +38,7 @@ def analizar():
         'format': 'best',
         'extractor_args': {
             'youtube': {
-                'player_client': ['ios', 'android']  # <-- Forzamos clientes móviles que no usan el desafío web pesado
+                'player_client': ['web', 'mweb']  # <--- Cambiado a clientes web compatibles con cookies
             }
         }
     }
@@ -90,7 +90,7 @@ def descargar():
         'noplaylist': True,
         'extractor_args': {
             'youtube': {
-                'player_client': ['ios', 'android']  # <-- Lo mismo acá
+                'player_client': ['web', 'mweb']  # <--- Lo mismo acá
             }
         }
     }

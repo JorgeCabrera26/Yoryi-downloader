@@ -33,7 +33,6 @@ def analizar():
     url = request.form.get('url')
     
     ydl_opts = {
-        ydl_opts = {
         'format': 'best',
         'ignoreerrors': True,
         'no_warnings': True

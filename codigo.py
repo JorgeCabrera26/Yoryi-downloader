@@ -26,18 +26,13 @@ def analizar():
     url = request.form.get('url')
     
     ydl_opts = {
-        'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
-        'format': 'best',
-        'noplaylist': True,
-        'quiet': False,
-        'no_warnings': False,
-        'extractor_args': {
-            'youtube': {
-                'player_client': ['web_embedded', 'tvclient'], # <-- Estos clientes evaden la verificación de bot sin pedir cookies
-                'skip': ['dash', 'hls']
-            }
+    'cookiefile': 'cookies.txt',
+    'extractor_args': {
+        'youtube': {
+            'clients': ['android', 'web', 'ios']
         }
     }
+}
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

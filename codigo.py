@@ -4,7 +4,7 @@ import execjs
 import os
 
 # Obtiene la ruta de la carpeta actual donde corre tu script
-base_dir = os.path.dirname(os.pacth.abspath(__file__))
+base_dir = os.path.dirname(os.path.abspath(__file__))
 cookies_path = os.path.join(base_dir, 'cookies.txt')
 
 #Esto carga las cookies desde la variable de entorno que configuraste en render
@@ -32,14 +32,14 @@ def inicio():
 def analizar():
     url = request.form.get('url')
     
-    ydl_opts = {
-    'cookiefile': 'cookies.txt',
-    'extractor_args': {
-        'youtube': {
-            'clients': ['android', 'web', 'ios']
+   ydl_opts = {
+        'cookiefile': cookies_path,  # Usamos la ruta absoluta que creamos arriba
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['web', 'android']
+            }
         }
     }
-}
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -80,15 +80,17 @@ def descargar():
     url = request.form.get('url')
     format_id = request.form.get('format_id')
     
-    ydl_opts = {
+   ydl_opts = {
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
         'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'cookiefile': 'cookies.txt',
-        'format': 'bestvideo+bestaudio/best', # <--- CAMBIA ESTA LÍNEA (Intenta el mejor video y audio combinados, o el mejor que venga solo)
+        'cookiefile': cookies_path,  # <--- Ruta absoluta correcta
+        'format': 'bestvideo+bestaudio/best',
         'noplaylist': True,
-        'external_downloader_args': ['--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'],
-        'format': 'best',
-        'cookiefile': cookies_path, # Ruta exacta y absoluta
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['web', 'android']
+            }
+        }
     }
     
     if format_id == 'bestaudio':

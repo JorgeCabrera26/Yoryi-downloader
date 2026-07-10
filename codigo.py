@@ -6,19 +6,12 @@ import os
 base_dir = os.path.dirname(os.path.abspath(__file__))
 cookies_path = os.path.join(base_dir, 'cookies.txt')
 
-# Cargar cookies desde Render (variable de entorno)
-cookies_content = os.getenv('COOKIES_CONTENT')
-
-if cookies_content:
-    cookies_content = cookies_content.replace('\\n', '\n')
-    with open(cookies_path, 'w', encoding='utf-8') as f:
-        f.write(cookies_content)
-    print("cookies encontradas:",
-os.parh.exists(cookies_path))
-    print("Tamaño:",
-os.path.getsize(cookies_path))
+# Verificar cookies.txt
+if os.path.exists(cookies_path):
+    print("cookies encontradas:", True)
+    print("Tamaño:", os.path.getsize(cookies_path))
 else:
-    print("No existe COOKIES_CONTENT en render")
+    print("No se encontró cookies.txt")
 
 app = Flask(__name__)
 
@@ -132,7 +125,10 @@ def descargar():
                         archivo_descargado = ruta
                         break
 
-            respuesta = send_file(archivo_descargado, as_attachment=True)
+            respuesta = send_file(
+                archivo_descargado,
+                as_attachment=True
+            )
 
             @respuesta.call_on_close
             def borrar_archivo():
@@ -149,4 +145,8 @@ def descargar():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        debug=False
+    )

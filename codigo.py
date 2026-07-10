@@ -35,10 +35,11 @@ def analizar():
     ydl_opts = {
         'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'format': 'best',
+        'yt_dlp_plugins': True,
         'extractor_args': {
             'youtube': {
-                'player_client': ['android_vr'],
-                'skip': ['webpage', 'configs']
+                'player_client': ['web'],
+                'oauth': True
             }
         }
     }
@@ -87,10 +88,11 @@ def descargar():
         'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'format': 'best',
         'noplaylist': True,
+        'yt_dlp_plugins': True,
         'extractor_args': {
             'youtube': {
-                'player_client': ['android_vr'],
-                'skip': ['webpage', 'configs']
+                'player_client': ['web'],
+                'oauth': True
             }
         }
     }

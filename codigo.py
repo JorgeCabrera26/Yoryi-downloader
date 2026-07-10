@@ -32,7 +32,7 @@ def inicio():
 def analizar():
     url = request.form.get('url')
     
-   ydl_opts = {
+    ydl_opts = {
         'cookiefile': cookies_path,  # Usamos la ruta absoluta que creamos arriba
         'extractor_args': {
             'youtube': {

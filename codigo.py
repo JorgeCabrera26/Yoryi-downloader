@@ -33,14 +33,15 @@ def analizar():
     url = request.form.get('url')
     
     ydl_opts = {
-        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'format': 'best',
         'extractor_args': {
             'youtube': {
-                'player_client': ['web', 'mweb'],
-                'player_skip': ['webpage', 'configs']
+                'player_client': ['android'],
+                'skip': ['webpage', 'configs']
             }
-        }
+        },
+        'check_formats': False,
+        'dynamic_mpd': False
     }
     
     try:
@@ -84,15 +85,16 @@ def descargar():
     
     ydl_opts = {
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
-        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'format': 'best',
         'noplaylist': True,
         'extractor_args': {
             'youtube': {
-                'player_client': ['web', 'mweb'],
-                'player_skip': ['webpage', 'configs']
+                'player_client': ['android'],
+                'skip': ['webpage', 'configs']
             }
-        }
+        },
+        'check_formats': False,
+        'dynamic_mpd': False
     }
     
     if format_id == 'bestaudio':

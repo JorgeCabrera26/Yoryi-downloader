@@ -1,22 +1,18 @@
 from flask import Flask, render_template, request, send_file
 import yt_dlp
-import execjs 
 import os
 
 # Obtiene la ruta de la carpeta actual donde corre tu script
 base_dir = os.path.dirname(os.path.abspath(__file__))
 cookies_path = os.path.join(base_dir, 'cookies.txt')
 
-#Esto carga las cookies desde la variable de entorno que configuraste en render
-cookies_content = os.getenv('COOKIES_CONTENT')
-
+# Esto carga las cookies desde la variable de entorno que configuraste en render
 cookies_content = os.getenv('COOKIES_CONTENT')
 if cookies_content:
     # Reemplaza saltos de línea literales si Render los guardó como texto '\n'
     cookies_content = cookies_content.replace('\\n', '\n')
-    with open('cookies.txt', 'w', encoding='utf-8') as f:
+    with open(cookies_path, 'w', encoding='utf-8') as f:
         f.write(cookies_content)
-  
 
 app = Flask(__name__)
 
@@ -32,16 +28,12 @@ def inicio():
 def analizar():
     url = request.form.get('url')
     
+    # Configuracion limpia usando el archivo de cookies fisico generado
     ydl_opts = {
         'format': 'best',
-        'extractor_args': {
-            'youtube': {
-                'player_client': ['android'],
-                'skip': ['webpage', 'configs']
-            }
-        },
-        'check_formats': False,
-        'dynamic_mpd': False
+        'cookiefile': cookies_path if os.path.exists(cookies_path) else None,
+        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'check_formats': False
     }
     
     try:
@@ -87,14 +79,9 @@ def descargar():
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
         'format': 'best',
         'noplaylist': True,
-        'extractor_args': {
-            'youtube': {
-                'player_client': ['android'],
-                'skip': ['webpage', 'configs']
-            }
-        },
-        'check_formats': False,
-        'dynamic_mpd': False
+        'cookiefile': cookies_path if os.path.exists(cookies_path) else None,
+        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'check_formats': False
     }
     
     if format_id == 'bestaudio':
@@ -107,8 +94,6 @@ def descargar():
             info = ydl.extract_info(url, download=True)
             archivo_descargado = ydl.prepare_filename(info)
             
-            # Creamos una función interna para borrar el archivo de la carpeta temporal 
-            # justo después de enviar la respuesta al navegador del usuario
             def borrar_archivo_despues(response):
                 try:
                     if os.path.exists(archivo_descargado):
@@ -124,5 +109,4 @@ def descargar():
         return f"Error durante la descarga: {str(e)}", 500
 
 if __name__ == '__main__':
-    # Ponemos debug=False para producción y seguridad en internet
     app.run(debug=False)

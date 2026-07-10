@@ -80,7 +80,7 @@ def descargar():
     url = request.form.get('url')
     format_id = request.form.get('format_id')
     
-   ydl_opts = {
+    ydl_opts = {
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
         'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'cookiefile': cookies_path,  # <--- Ruta absoluta correcta

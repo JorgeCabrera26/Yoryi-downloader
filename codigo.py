@@ -37,7 +37,7 @@ def analizar():
         'format': 'best',
         'extractor_args': {
             'youtube': {
-                'player_client': ['ios'],
+                'player_client': ['embed'],
                 'skip': ['webpage', 'configs']
             }
         }
@@ -89,7 +89,7 @@ def descargar():
         'noplaylist': True,
         'extractor_args': {
             'youtube': {
-                'player_client': ['ios'],
+                'player_client': ['embed'],
                 'skip': ['webpage', 'configs']
             }
         }

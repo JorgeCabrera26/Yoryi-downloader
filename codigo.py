@@ -33,12 +33,11 @@ def analizar():
     url = request.form.get('url')
     
     ydl_opts = {
-        'cookiefile': cookies_path,
         'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'format': 'best',
         'extractor_args': {
             'youtube': {
-                'player_client': ['web', 'mweb']  # <--- Cambiado a clientes web compatibles con cookies
+                'player_client': ['tv']
             }
         }
     }
@@ -84,13 +83,12 @@ def descargar():
     
     ydl_opts = {
         'outtmpl': os.path.join(CARPETA_DESCARGAS, '%(title)s.%(ext)s'),
-        'cookiefile': cookies_path,
         'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'format': 'best',
         'noplaylist': True,
         'extractor_args': {
             'youtube': {
-                'player_client': ['web', 'mweb']  # <--- Lo mismo acá
+                'player_client': ['tv']
             }
         }
     }

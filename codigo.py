@@ -6,8 +6,11 @@ import os
 #Esto carga las cookies desde la variable de entorno que configuraste en render
 cookies_content = os.getenv('COOKIES_CONTENT')
 
+cookies_content = os.getenv('COOKIES_CONTENT')
 if cookies_content:
-    with open('cookies.txt', 'w') as f:
+    # Reemplaza saltos de línea literales si Render los guardó como texto '\n'
+    cookies_content = cookies_content.replace('\\n', '\n')
+    with open('cookies.txt', 'w', encoding='utf-8') as f:
         f.write(cookies_content)
   
 

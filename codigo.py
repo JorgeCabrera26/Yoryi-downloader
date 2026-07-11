@@ -36,8 +36,7 @@ def analizar():
         'cookiefile': cookies_path,
         'extractor_args': {
             'youtube': {
-                'player_client': ['android'],
-                'skip': ['webpage', 'configs']
+                'player_client': ['web'],
             }
         },
         'check_formats': False,
